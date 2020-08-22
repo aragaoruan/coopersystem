@@ -23,7 +23,7 @@ const InvestmentList: React.FC = () => {
   const handleRescue = useCallback(
     (item: ListaInvestimentos) => {
       if (item.indicadorCarencia === 'N') {
-        navigate('RescueConfirm', item);
+        navigate('PersonalizedRescue', item);
       }
     },
     [navigate],

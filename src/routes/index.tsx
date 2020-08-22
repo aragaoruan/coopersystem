@@ -4,12 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { colors } from '~/styles';
 
 import InvestmentList from '~/page/InvestmentList';
+import PersonalizedRescue from '~/page/PersonalizedRescue';
 
 const Stack = createStackNavigator();
 
 const Routes: React.FC = () => {
   return (
     <Stack.Navigator
+      initialRouteName="PersonalizedRescue"
       screenOptions={{
         headerStyle: {
           backgroundColor: colors.blue,
@@ -25,6 +27,12 @@ const Routes: React.FC = () => {
       <Stack.Screen
         name="InvestmentList"
         component={InvestmentList}
+        options={{ title: 'Investimentos' }}
+      />
+
+      <Stack.Screen
+        name="PersonalizedRescue"
+        component={PersonalizedRescue}
         options={{ title: 'Resgate' }}
       />
     </Stack.Navigator>
