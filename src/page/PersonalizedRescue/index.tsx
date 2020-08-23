@@ -1,10 +1,13 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 
 import { FormHandles } from '@unform/core';
-import { useRoute } from '@react-navigation/native';
-import * as Yup from 'yup';
+import { useRoute, useNavigation } from '@react-navigation/native';
+
+import { useInvestment } from '~/hooks/investment';
 
 import Title from '~/components/Title';
+import Modal from '~/components/Modal';
+
 import InfoForm from '~/components/Form/InfoForm';
 
 import RescueFormItem from './RescueFormItem';
@@ -31,21 +34,31 @@ interface Validations {
 
 const PersonalizedRescue: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const [visible, setVisible] = useState(false);
+  const { setActions, total } = useInvestment();
 
   const { params } = useRoute();
-  const {
-    nome,
-    objetivo,
-    saldoTotalDisponivel,
-    indicadorCarencia,
-    acoes,
-  } = params as RouteParams;
+  const { goBack } = useNavigation();
+  const { nome, saldoTotalDisponivel, acoes } = params as RouteParams;
 
-  const handleForm = useCallback(async (data) => {}, []);
+  useEffect(() => {
+    setActions(acoes);
+  }, [setActions, acoes]);
+
+  const handleForm = useCallback(() => {
+    if (total > 0 && total < saldoTotalDisponivel) {
+      setVisible(true);
+    }
+  }, [total, saldoTotalDisponivel]);
+
+  const handleModal = useCallback(() => {
+    goBack();
+  }, [goBack]);
 
   return (
     <Container>
       <ScrollView>
+        <Modal handleModal={handleModal} visible={visible} />
         <Form ref={formRef} onSubmit={handleForm}>
           <Title leftTitle="dados do investimento" />
           <InfoForm title="Nome" desc={nome} />
@@ -63,9 +76,12 @@ const PersonalizedRescue: React.FC = () => {
             />
           ))}
 
-          <InfoForm title="Valor total a resgatar" desc="ewfweg" />
+          <InfoForm title="Valor total a resgatar" desc={total} />
 
-          <Button onPress={() => formRef.current?.submitForm()}>
+          <Button
+            disabled={!(total > 0 && total < saldoTotalDisponivel)}
+            onPress={() => formRef.current?.submitForm()}
+          >
             <TextButton>CONFIRMAR RESGATE</TextButton>
           </Button>
         </Form>

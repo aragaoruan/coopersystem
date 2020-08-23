@@ -1,24 +1,21 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import api from '~/services/api';
+
+import { useInvestment } from '~/hooks/investment';
 
 import { Container } from './styles';
 
-import Header from './List/Header';
+import Header from '~/components/Title';
+import Loader from '~/components/Loader';
 import Item from './List/Item';
 
-import { Response, ListaInvestimentos } from './interfaces';
+import { ListaInvestimentos } from './interfaces';
 
 const InvestmentList: React.FC = () => {
-  const [investments, setInvestments] = useState<ListaInvestimentos[]>();
-  const { navigate } = useNavigation();
+  const { investments, loading } = useInvestment();
 
-  useEffect(() => {
-    api.get<Response>('5e76797e2f0000f057986099').then((response) => {
-      setInvestments(response.data.response.data.listaInvestimentos);
-    });
-  }, []);
+  const { navigate } = useNavigation();
 
   const handleRescue = useCallback(
     (item: ListaInvestimentos) => {
@@ -28,6 +25,10 @@ const InvestmentList: React.FC = () => {
     },
     [navigate],
   );
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Container>

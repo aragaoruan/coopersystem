@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Input from '~/components/Form/Input';
 import InfoForm from '~/components/Form/InfoForm';
@@ -30,6 +30,7 @@ const RescueFormItem: React.FC<Props> = ({ acao, total }) => {
         placeholder="Valor a resgatar"
         keyboardType="numeric"
         total={formattedValue}
+        acao={acao}
       />
     </Container>
   );

@@ -13,9 +13,17 @@ import { TextInputProps } from 'react-native';
 import { maskCurrency, maskCurrencyNumber } from '~/utils/mask';
 import { Container, ContainerInput, TextInput, Text, Error } from './styles';
 
+import { useInvestment } from '~/hooks/investment';
+
+interface Acoes {
+  id: number;
+  nome: string;
+  percentual: number;
+}
 interface InputProps extends TextInputProps {
   name: string;
   total: string;
+  acao: Acoes;
 }
 
 interface InputValueReference {
@@ -27,7 +35,7 @@ interface InputRef {
 }
 
 const Input: React.RefForwardingComponent<InputRef, InputProps> = (
-  { name, total, ...rest },
+  { name, acao, total, ...rest },
   ref,
 ) => {
   const inputElementRef = useRef<any>(null);
@@ -37,6 +45,8 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 
   const [valueInput, setValueInput] = useState('');
   const [error, setError] = useState(false);
+
+  const { updateActions } = useInvestment();
 
   useImperativeHandle(ref, () => ({
     focus() {
@@ -66,13 +76,18 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
       inputValueRef.current.value = val;
       setValueInput(valor);
 
-      if (maskCurrencyNumber(val) > total) {
+      if (maskCurrencyNumber(val) > parseFloat(total)) {
         setError(true);
       } else {
         setError(false);
       }
+
+      updateActions({
+        ...acao,
+        newValue: maskCurrencyNumber(val),
+      });
     },
-    [total],
+    [total, updateActions, acao],
   );
 
   return (

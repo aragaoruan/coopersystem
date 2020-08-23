@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { Form as Unform } from '@unform/mobile';
-
+import { lighten } from 'polished';
 import { colors, fonts } from '~/styles';
 
 export const Container = styled.SafeAreaView`
@@ -17,8 +17,13 @@ export const Form = styled(Unform)`
   width: 100%;
 `;
 
-export const Button = styled.TouchableOpacity`
-  background: ${colors.yellow};
+interface ButtonProps {
+  disabled: boolean;
+}
+
+export const Button = styled.TouchableOpacity<ButtonProps>`
+  background: ${(props) =>
+    props.disabled ? lighten(0.1, colors.yellow) : colors.yellow};
   justify-content: center;
   align-items: center;
   width: 100%;
