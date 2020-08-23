@@ -22,7 +22,7 @@ const RescueFormItem: React.FC<Props> = ({ acao, total }) => {
   ).toLocaleString('pt-br', { minimumFractionDigits: 2 });
 
   return (
-    <Container>
+    <Container testID="rescue-form-item">
       <InfoForm title="Ação" desc={acao.nome} />
       <InfoForm title="Saldo acumulado" desc={formattedValue} />
       <Input

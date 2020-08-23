@@ -19,7 +19,7 @@ const Modal: React.FC<Props> = ({ visible, handleModal }) => {
   return (
     <Container>
       <ModalComponent isVisible={visible}>
-        <Content>
+        <Content testID="modal-test">
           <Title>RESGATE EFETUADO</Title>
           <Description>
             O valor solicitado está em sua conta em até 5 dias úteis!

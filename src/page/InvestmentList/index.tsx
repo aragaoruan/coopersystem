@@ -31,8 +31,9 @@ const InvestmentList: React.FC = () => {
   }
 
   return (
-    <Container>
+    <Container testID="primeiro">
       <FlatList
+        testID="flat-list"
         ListHeaderComponent={
           <Header leftTitle="investimento" rightTitle="R$" />
         }

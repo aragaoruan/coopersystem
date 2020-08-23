@@ -8,7 +8,7 @@ import { Container } from './styles';
 const Loader: React.FC = () => {
   return (
     <Container>
-      <ActivityIndicator size="large" color={colors.blue} />
+      <ActivityIndicator testID="loader" size="large" color={colors.blue} />
     </Container>
   );
 };
