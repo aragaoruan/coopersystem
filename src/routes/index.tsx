@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 const Routes: React.FC = () => {
   return (
     <Stack.Navigator
-      initialRouteName="PersonalizedRescue"
+      // initialRouteName="PersonalizedRescue"
       screenOptions={{
         headerStyle: {
           backgroundColor: colors.blue,

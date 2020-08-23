@@ -4,7 +4,7 @@ import { Container, Title, Desc } from './styles';
 
 interface Props {
   title: string;
-  desc: string;
+  desc: string | number;
 }
 
 const InfoForm: React.FC<Props> = ({ title, desc }) => {
